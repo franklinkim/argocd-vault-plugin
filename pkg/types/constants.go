@@ -15,11 +15,10 @@ const (
 	EnvAvpKvVersion      = "AVP_KV_VERSION"
 	EnvAvpPathPrefix     = "AVP_PATH_PREFIX"
 	EnvAWSRegion         = "AWS_REGION"
-	EnvOPVaultUUID       = "OP_VAULT_UUID"
-	EnvOPConnectToken    = "OP_CONNECT_TOKEN"
+	EnvOPVault           = "OP_VAULT"
 	EnvOPConnectHost     = "OP_CONNECT_HOST"
+	EnvOPConnectToken    = "OP_CONNECT_TOKEN"
 	EnvVaultAddress      = "VAULT_ADDR"
-	EnvVaultToken        = "VAULT_TOKEN"
 
 	// Backend and Auth Constants
 	VaultBackend               = "vault"

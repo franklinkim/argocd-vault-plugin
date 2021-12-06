@@ -171,21 +171,18 @@ func New(v *viper.Viper, co *Options) (*Config, error) {
 		}
 	case types.AzureKeyOnePasswordbackend:
 		{
-			if !v.IsSet(types.EnvOPVaultUUID) { // issue warning when using default region
-				return nil, fmt.Errorf("%s required for 1Password Secrets Manager", types.EnvOPVaultUUID)
-			} else if !v.IsSet(types.EnvVaultAddress) || !v.IsSet(types.EnvOPConnectHost) {
+			if !v.IsSet(types.EnvOPVault) {
+				return nil, fmt.Errorf("%s required for 1Password Secrets Manager", types.EnvOPVault)
+			} else if !v.IsSet(types.EnvOPConnectHost) {
 				return nil, fmt.Errorf("%s required for 1Password Secrets Manager", types.EnvVaultAddress)
-			} else if !v.IsSet(types.EnvVaultToken) || !v.IsSet(types.EnvOPConnectToken) {
-				return nil, fmt.Errorf("%s required for 1Password Secrets Manager", types.EnvVaultToken)
-			} else {
-				v.SetDefault(types.EnvOPConnectToken, v.GetString(types.EnvVaultToken))
-				v.SetDefault(types.EnvOPConnectHost, v.GetString(types.EnvVaultAddress))
+			} else if !v.IsSet(types.EnvOPConnectToken) {
+				return nil, fmt.Errorf("%s required for 1Password Secrets Manager", types.EnvOPConnectToken)
 			}
 			client, err := connect.NewClientFromEnvironment()
 			if err != nil {
 				return nil, err
 			}
-			backend = backends.NewOnePasswordBackend(client, v.GetString(types.EnvOPVaultUUID))
+			backend = backends.NewOnePasswordBackend(client, v.GetString(types.EnvOPVault))
 		}
 	default:
 		return nil, errors.New("Must provide a supported Vault Type")

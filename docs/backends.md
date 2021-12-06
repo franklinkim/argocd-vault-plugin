@@ -392,3 +392,48 @@ data:
   current-password-again: <path:keyvault#password#8f8da2e06c8240808ee439ff093803b5>
   password-old: <path:keyvault#password#33740fc26214497f8904d93f20f7db6d>
 ```
+
+### 1Password Vault
+
+##### 1Password Authentication
+Refer to the [Use environment-based authentication](https://github.com/1Password/connect-sdk-go#environment-variables) in the 1Password SDK for Go.
+
+For 1Password, `path` is the unique name or UUID of your secret.
+
+**Note**: Versioning is not supported.
+
+These are the parameters for Azure:
+```
+AVP_TYPE: onepassword
+OP_VAULT: Your vault UUID.
+OP_CONNECT_HOST: The hostname of the 1Password Connect API
+OP_CONNECT_TOKEN: The API token to be used to authenticate the client to a 1Password Connect API.
+```
+
+##### Examples
+
+###### Path Annotation
+
+```yaml
+kind: Secret
+apiVersion: v1
+metadata:
+  name: test-secret
+  annotations:
+    avp.kubernetes.io/path: "keyvault"
+type: Opaque
+data:
+  password: <test-secret>
+```
+
+###### Inline Path
+
+```yaml
+kind: Secret
+apiVersion: v1
+metadata:
+  name: test-secret
+type: Opaque
+data:
+  password: <path:keyvault#test-secret>
+```
