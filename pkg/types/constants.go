@@ -15,27 +15,32 @@ const (
 	EnvAvpKvVersion      = "AVP_KV_VERSION"
 	EnvAvpPathPrefix     = "AVP_PATH_PREFIX"
 	EnvAWSRegion         = "AWS_REGION"
+	EnvOPVaultUUID       = "OP_VAULT_UUID"
+	EnvOPConnectToken    = "OP_CONNECT_TOKEN"
+	EnvOPConnectHost     = "OP_CONNECT_HOST"
 	EnvVaultAddress      = "VAULT_ADDR"
+	EnvVaultToken        = "VAULT_TOKEN"
 
 	// Backend and Auth Constants
-	VaultBackend             = "vault"
-	IBMSecretsManagerbackend = "ibmsecretsmanager"
-	AWSSecretsManagerbackend = "awssecretsmanager"
-	GCPSecretManagerbackend  = "gcpsecretmanager"
-	AzureKeyVaultbackend     = "azurekeyvault"
-	K8sAuth                  = "k8s"
-	ApproleAuth              = "approle"
-	GithubAuth               = "github"
-	TokenAuth                = "token"
-	IAMAuth                  = "iam"
-	AwsDefaultRegion         = "us-east-2"
-	GCPCurrentSecretVersion  = "latest"
-	IBMMaxRetries            = 3
-	IBMRetryIntervalSeconds  = 20
-	IBMMaxPerPage            = 200
-	IBMIAMCredentialsType    = "iam_credentials"
-	IBMImportedCertType      = "imported_cert"
-	IBMPublicCertType        = "public_cert"
+	VaultBackend               = "vault"
+	IBMSecretsManagerbackend   = "ibmsecretsmanager"
+	AWSSecretsManagerbackend   = "awssecretsmanager"
+	GCPSecretManagerbackend    = "gcpsecretmanager"
+	AzureKeyVaultbackend       = "azurekeyvault"
+	AzureKeyOnePasswordbackend = "onepassword"
+	K8sAuth                    = "k8s"
+	ApproleAuth                = "approle"
+	GithubAuth                 = "github"
+	TokenAuth                  = "token"
+	IAMAuth                    = "iam"
+	AwsDefaultRegion           = "us-east-2"
+	GCPCurrentSecretVersion    = "latest"
+	IBMMaxRetries              = 3
+	IBMRetryIntervalSeconds    = 20
+	IBMMaxPerPage              = 200
+	IBMIAMCredentialsType      = "iam_credentials"
+	IBMImportedCertType        = "imported_cert"
+	IBMPublicCertType          = "public_cert"
 
 	// Supported annotations
 	AVPPathAnnotation          = "avp.kubernetes.io/path"

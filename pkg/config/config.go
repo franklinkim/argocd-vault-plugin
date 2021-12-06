@@ -12,19 +12,21 @@ import (
 	"time"
 
 	gcpsm "cloud.google.com/go/secretmanager/apiv1"
+	"github.com/1Password/connect-sdk-go/connect"
 	"github.com/Azure/azure-sdk-for-go/profiles/latest/keyvault/keyvault"
 	kvauth "github.com/Azure/azure-sdk-for-go/services/keyvault/auth"
 	"github.com/IBM/go-sdk-core/v5/core"
 	ibmsm "github.com/IBM/secrets-manager-go-sdk/secretsmanagerv1"
-	"github.com/argoproj-labs/argocd-vault-plugin/pkg/auth/vault"
-	"github.com/argoproj-labs/argocd-vault-plugin/pkg/backends"
-	"github.com/argoproj-labs/argocd-vault-plugin/pkg/kube"
-	"github.com/argoproj-labs/argocd-vault-plugin/pkg/types"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	awssm "github.com/aws/aws-sdk-go/service/secretsmanager"
 	"github.com/hashicorp/vault/api"
 	"github.com/spf13/viper"
+
+	"github.com/argoproj-labs/argocd-vault-plugin/pkg/auth/vault"
+	"github.com/argoproj-labs/argocd-vault-plugin/pkg/backends"
+	"github.com/argoproj-labs/argocd-vault-plugin/pkg/kube"
+	"github.com/argoproj-labs/argocd-vault-plugin/pkg/types"
 )
 
 // Options options that can be passed to a Config struct
@@ -166,6 +168,24 @@ func New(v *viper.Viper, co *Options) (*Config, error) {
 			basicClient := keyvault.New()
 			basicClient.Authorizer = authorizer
 			backend = backends.NewAzureKeyVaultBackend(basicClient)
+		}
+	case types.AzureKeyOnePasswordbackend:
+		{
+			if !v.IsSet(types.EnvOPVaultUUID) { // issue warning when using default region
+				return nil, fmt.Errorf("%s required for 1Password Secrets Manager", types.EnvOPVaultUUID)
+			} else if !v.IsSet(types.EnvVaultAddress) || !v.IsSet(types.EnvOPConnectHost) {
+				return nil, fmt.Errorf("%s required for 1Password Secrets Manager", types.EnvVaultAddress)
+			} else if !v.IsSet(types.EnvVaultToken) || !v.IsSet(types.EnvOPConnectToken) {
+				return nil, fmt.Errorf("%s required for 1Password Secrets Manager", types.EnvVaultToken)
+			} else {
+				v.SetDefault(types.EnvOPConnectToken, v.GetString(types.EnvVaultToken))
+				v.SetDefault(types.EnvOPConnectHost, v.GetString(types.EnvVaultAddress))
+			}
+			client, err := connect.NewClientFromEnvironment()
+			if err != nil {
+				return nil, err
+			}
+			backend = backends.NewOnePasswordBackend(client, v.GetString(types.EnvOPVaultUUID))
 		}
 	default:
 		return nil, errors.New("Must provide a supported Vault Type")

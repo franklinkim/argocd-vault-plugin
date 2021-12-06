@@ -7,6 +7,7 @@ require (
 	cloud.google.com/go/kms v1.0.0 // indirect
 	cloud.google.com/go/monitoring v1.0.0 // indirect
 	cloud.google.com/go/secretmanager v1.0.0
+	github.com/1Password/connect-sdk-go v1.2.1-0.20211123114538-7addcc9876bb
 	github.com/Azure/azure-sdk-for-go v58.1.0+incompatible
 	github.com/Azure/go-autorest/autorest v0.11.21 // indirect
 	github.com/Azure/go-autorest/autorest/adal v0.9.16 // indirect
@@ -24,6 +25,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.1.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
+	github.com/google/uuid v1.1.2
 	github.com/googleapis/gax-go/v2 v2.1.1
 	github.com/hashicorp/go-hclog v0.16.1
 	github.com/hashicorp/hcl v1.0.1-vault-3 // indirect
